@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike Brasil - Loja Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #111;
+            overflow-x: hidden;
+        }
+        
+        .hero-video {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background-color: #111;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e63946;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .mobile-menu {
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu.closed {
+            transform: translateX(100%);
+        }
+        
+        .newsletter-input {
+            border: none;
+            border-bottom: 2px solid #111;
+            background: transparent;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-input:focus {
+            border-bottom-color: #e63946;
+        }
+        
+        .header-bg {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #111;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+            
+            .mobile-full-width {
+                width: 100% !important;
+            }
+            
+            .mobile-text-center {
+                text-align: center !important;
+            }
+            
+            .mobile-mt-4 {
+                margin-top: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 header-bg z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#home">
+                    <img src="Nova pasta/nike preto.png" alt="Nike Logo" class="h-10">
+                </a>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#novidades" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Novidades</a>
+                <a href="#masculino" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Masculino</a>
+                <a href="#feminino" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Feminino</a>
+                <a href="#infantil" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Infantil</a>
+                <a href="#lancamentos" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Lançamentos</a>
+                <a href="#ofertas" class="nav-link text-gray-800 hover:text-gray-600 font-medium transition">Ofertas</a>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <button id="search-btn" class="text-gray-800 hover:text-gray-600">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <div id="search-bar" class="hidden absolute top-full right-0 mt-2 bg-white p-2 shadow-lg rounded">
+                        <input type="text" placeholder="Pesquisar..." class="px-3 py-1 border border-gray-300 rounded">
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <button id="cart-btn" class="text-gray-800 hover:text-gray-600 relative">
+                        <i class="fas fa-shopping-bag text-xl"></i>
+                        <span id="cart-count" class="cart-count hidden">0</span>
+                    </button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-800 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 p-4 transform translate-x-full transition duration-300">
+        <div class="flex justify-between items-center mb-8">
+            <img src="Nova pasta/nike preto.png" alt="Nike Logo" class="h-10">
+            <button id="close-mobile-menu" class="text-gray-800 focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <ul class="space-y-6">
+            <li><a href="#novidades" class="block text-xl text-gray-800 hover:text-gray-600">Novidades</a></li>
+            <li><a href="#masculino" class="block text-xl text-gray-800 hover:text-gray-600">Masculino</a></li>
+            <li><a href="#feminino" class="block text-xl text-gray-800 hover:text-gray-600">Feminino</a></li>
+            <li><a href="#infantil" class="block text-xl text-gray-800 hover:text-gray-600">Infantil</a></li>
+            <li><a href="#lancamentos" class="block text-xl text-gray-800 hover:text-gray-600">Lançamentos</a></li>
+            <li><a href="#ofertas" class="block text-xl text-gray-800 hover:text-gray-600">Ofertas</a></li>
+        </ul>
+    </div>
+    
+    <!-- Hero Video -->
+    <section id="home" class="relative h-screen">
+        <video autoplay muted loop class="hero-video">
+            <source src="Nova pasta/video.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+            <div class="text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">A NOVA COLEÇÃO DA SELEÇÃO BRASILEIRA</h1>
+                <a href="#lancamentos" class="inline-block bg-white text-black hover:bg-gray-100 font-medium py-3 px-8 rounded-full transition duration-300">
+                    Compre Agora
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Novidades -->
+    <section id="novidades" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">NOVIDADES</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/Pretao.png" alt="Nova Coleção" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Coleção Verão 2024</h3>
+                        <p class="text-gray-600 mb-3">Tecidos leves e respiráveis para o calor</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">A partir de R$ 199,99</span>
+                            <button class="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Ver Coleção
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/air force white.png" alt="Tênis Inovador" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Nike Air Max Pulse</h3>
+                        <p class="text-gray-600 mb-3">Conforto que pulsa em cada passo</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 899,99</span>
+                            <button class="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/conjuntoacademy.png" alt="Acessórios" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Acessórios Esportivos</h3>
+                        <p class="text-gray-600 mb-3">Complete seu look com nossos acessórios</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">A partir de R$ 59,99</span>
+                            <button class="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Ver Mais
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Masculino -->
+    <section id="masculino" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">MASCULINO</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/camisaniki.png" alt="Camiseta Masculina" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Camiseta Nike Dri-FIT</h3>
+                        <p class="text-gray-600 mb-3">Tecnologia que mantém você seco</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 149,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/camisaniki2.png" alt="Shorts Masculino" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Shorts Nike Sportswear</h3>
+                        <p class="text-gray-600 mb-3">Conforto para treinos e dia a dia</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 199,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/tenisnike.png" alt="Tênis Masculino" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Nike Air Force 1 '07</h3>
+                        <p class="text-gray-600 mb-3">O clássico do basquete reinventado</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 899,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#masculino" class="inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                    Ver Toda a Coleção Masculina
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Feminino -->
+    <section id="feminino" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">FEMININO</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/mulher 2.png" alt="Produto Feminino" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Tênis Nike Air Max</h3>
+                        <p class="text-gray-600 mb-3">Conforto e estilo para seu dia a dia</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 599,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/mulher 3.png" alt="Produto Feminino" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Tênis Nike Revolution</h3>
+                        <p class="text-gray-600 mb-3">Leveza para suas corridas</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 399,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/Nike one.png" alt="Legging Feminina" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Legging Nike One</h3>
+                        <p class="text-gray-600 mb-3">Ajuste perfeito para todos os movimentos</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 249,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/Top Nike swoosh.png" alt="Top Esportivo" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Top Nike Swoosh</h3>
+                        <p class="text-gray-600 mb-3">Suporte e conforto para seus treinos</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 179,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/Conjuntowidrunner.png" alt="Jaqueta Feminina" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Jaqueta Nike Windrunner</h3>
+                        <p class="text-gray-600 mb-3">Proteção contra vento e frio</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 399,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#feminino" class="inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                    Ver Toda a Coleção Feminina
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Infantil -->
+    <section id="infantil" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">INFANTIL</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/nikerevolution.png" alt="Tênis Infantil" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Tênis Nike Kids Revolution</h3>
+                        <p class="text-gray-600 mb-3">Conforto para os pequenos atletas</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 299,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/conjuntonikekids.png" alt="Conjunto Infantil" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Conjunto Nike Kids</h3>
+                        <p class="text-gray-600 mb-3">Estilo e conforto para crianças</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 199,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/moletomnikekids.png" alt="Moletom Infantil" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Moletom Nike Kids</h3>
+                        <p class="text-gray-600 mb-3">Aconchego para dias mais frios</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 179,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#infantil" class="inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                    Ver Toda a Coleção Infantil
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Best Sellers -->
+    <section id="ofertas" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">OS MAIS VENDIDOS</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/jordan 1.png" alt="Air Jordan 1" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Air Jordan 1 Retro High</h3>
+                        <p class="text-gray-600 mb-3">O clássico reinventado</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 1.299,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/jordan12.png" alt="Air Jordan 12" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Air Jordan 12 Retro</h3>
+                        <p class="text-gray-600 mb-3">Elegância e performance</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 1.199,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/dunk.png" alt="Nike Dunk" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Nike Dunk Low Retro</h3>
+                        <p class="text-gray-600 mb-3">Estilo urbano autêntico</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 899,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/jordan 4.png" alt="Air Jordan 4" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Air Jordan 4 Retro</h3>
+                        <p class="text-gray-600 mb-3">Design icônico, conforto premium</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 1.099,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden bg-white">
+                    <img src="Nova pasta/meia.png" alt="Meias Nike" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Kit Meias Nike Everyday</h3>
+                        <p class="text-gray-600 mb-3">Conforto para seus pés</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 89,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Women in Sports -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center mobile-stack">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0 mobile-full-width">
+                    <img src="Nova pasta/mulheres.png" alt="Mulheres no Esporte" class="w-full h-auto rounded-lg shadow-md">
+                </div>
+                
+                <div class="w-full md:w-1/2 md:pl-10 mobile-full-width mobile-mt-4">
+                    <div class="flex items-center mb-6">
+                        <h2 class="text-3xl font-bold mr-4">COMO AS MULHERES JOGAM</h2>
+                        <img src="Nova pasta/nike preto.png" alt="Nike Logo" class="h-8">
+                    </div>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        As primeiras referências de partidas de futebol disputadas por mulheres surgiram nos anos 2000. 
+                        Os registros de jornais mostram a prática, ainda de forma muito tímida, no Rio de Janeiro, 
+                        São Paulo e Rio Grande do Norte. Hoje, o futebol feminino brasileiro é referência mundial, 
+                        com atletas que inspiram novas gerações.
+                    </p>
+                    
+                    <a href="#feminino" class="inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                        Conheça a Coleção
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bundle Offer -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">COLEÇÃO DE 3 POR R$1000,00</h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">Combine estilo e economia com nossos kits exclusivos</p>
+            
+            <img src="Nova pasta/3 iMAGEM.png" alt="Coleção de 3" class="w-full max-w-4xl mx-auto mb-8">
+            
+            <h3 class="text-2xl font-bold mb-6">COMO MELHORAR SUA SAÚDE</h3>
+            <p class="text-gray-700 mb-8 max-w-2xl mx-auto">
+                Equipamentos de qualidade fazem toda a diferença na sua performance esportiva e bem-estar diário.
+            </p>
+            
+            <a href="#ofertas" class="inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                Compre o Kit
+            </a>
+        </div>
+    </section>
+    
+    <!-- Nike Air Zoom -->
+    <section id="lancamentos" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center mobile-stack">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0 mobile-full-width">
+                    <img src="Nova pasta/AIR ZOOM.png" alt="Nike Air Zoom" class="w-full h-auto rounded-lg shadow-md">
+                </div>
+                
+                <div class="w-full md:w-1/2 md:pl-10 mobile-full-width mobile-mt-4">
+                    <div class="flex items-center mb-6">
+                        <h2 class="text-3xl font-bold">CONHEÇA MAIS A NIKE AIR ZOOM</h2>
+                    </div>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Nova Nike Vaporfly ajuda seu desempenho na corrida fazendo com que tenha uma ótima qualidade 
+                        e eficácia entre seus oponentes. Tecnologia de amortecimento revolucionária para máxima 
+                        performance em corridas de longa distância.
+                    </p>
+                    
+                    <div class="mb-6">
+                        <span class="text-2xl font-bold">R$ 1.500,00</span>
+                    </div>
+                    
+                    <button class="add-to-cart inline-block bg-black text-white hover:bg-gray-800 font-medium py-3 px-8 rounded-full transition duration-300">
+                        Compre Agora
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/zoom 2.png" alt="Nike Air Zoom Detalhe" class="w-full h-auto">
+                </div>
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/zoom 3.png" alt="Nike Air Zoom Detalhe" class="w-full h-auto">
+                </div>
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/zoom 4.png" alt="Nike Air Zoom Detalhe" class="w-full h-auto">
+                </div>
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/zoom5.png" alt="Nike Air Zoom Detalhe" class="w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- European League -->
+    <section class="py-16 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center mobile-stack">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0 mobile-full-width">
+                    <img src="Nova pasta/europa liga.png" alt="Liga Europeia" class="w-full h-auto rounded-lg">
+                </div>
+                
+                <div class="w-full md:w-1/2 md:pl-10 mobile-full-width mobile-mt-4">
+                    <h2 class="text-3xl font-bold mb-6">LIGA EUROPEIA</h2>
+                    <h3 class="text-xl text-gray-300 mb-6">CONHEÇA NOSSAS CAMISAS</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        As camisas oficiais dos maiores clubes da Europa, com tecnologia Dri-FIT que mantém você seco 
+                        e confortável durante todo o jogo. Tecidos leves e respiráveis para máxima performance.
+                    </p>
+                    
+                    <a href="#masculino" class="inline-block bg-white text-black hover:bg-gray-200 font-medium py-3 px-8 rounded-full transition duration-300">
+                        Ver Coleção
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Corinthians Collection -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">OS NOVOS MANTOS DO TIMÃO</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/corinthians.png" alt="Camisa Corinthians" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Camisa Corinthians I 23/24</h3>
+                        <p class="text-gray-600 mb-3">Jogador - Torcedor</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 349,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/corint 2.png" alt="Camisa Corinthians" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Camisa Corinthians II 23/24</h3>
+                        <p class="text-gray-600 mb-3">Jogador - Torcedor</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 349,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card rounded-lg overflow-hidden">
+                    <img src="Nova pasta/corinthi 3.png" alt="Camisa Corinthians" class="w-full h-auto">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Camisa Corinthians III 23/24</h3>
+                        <p class="text-gray-600 mb-3">Jogador - Torcedor</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 349,99</span>
+                            <button class="add-to-cart bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-full transition">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="py-16 bg-black text-white">
+        <div class="container mx-auto px-4 text-center">
+            <img src="Nova pasta/nike sccp.png" alt="Nike SCCP" class="w-full max-w-4xl mx-auto mb-8">
+            
+            <h2 class="text-3xl font-bold mb-6">CADASTRE-SE PARA RECEBER NOVIDADES</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Receba ofertas exclusivas e seja o primeiro a saber sobre lançamentos</p>
+            
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Seu melhor e-mail" class="newsletter-input flex-grow px-4 py-3 text-white placeholder-gray-400">
+                <button class="bg-white text-black hover:bg-gray-200 font-medium px-6 py-3 transition duration-300">
+                    Enviar
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <img src="Nova pasta/nike preto.png" alt="Nike Logo" class="h-10 mb-4">
+                    <p class="text-gray-400">Inovação e inspiração para atletas de todos os níveis.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Produtos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#masculino" class="text-gray-400 hover:text-white transition">Masculino</a></li>
+                        <li><a href="#feminino" class="text-gray-400 hover:text-white transition">Feminino</a></li>
+                        <li><a href="#infantil" class="text-gray-400 hover:text-white transition">Infantil</a></li>
+                        <li><a href="#lancamentos" class="text-gray-400 hover:text-white transition">Lançamentos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Suporte</h3>
+                    <ul class="space-y-2">
+                        <li><a href="http://wa.me/5511982714456?text=Ol%C3%A1,%20tenho%20uma%20d%C3%BAvida.%20Por%20favor,%20me%20ajude!" class="text-gray-400 hover:text-white transition">Ajuda</a></li>
+                        <li><a href="http://wa.me/5511982714456?text=Ol%C3%A1,%20tenho%20uma%20d%C3%BAvida.%20Por%20favor,%20me%20ajude!" class="text-gray-400 hover:text-white transition">Rastreamento</a></li>
+                        <li><a href="http://wa.me/5511982714456?text=Ol%C3%A1,%20tenho%20uma%20d%C3%BAvida.%20Por%20favor,%20me%20ajude!" class="text-gray-400 hover:text-white transition">Entregas</a></li>
+                        <li><a href="http://wa.me/5511982714456?text=Ol%C3%A1,%20tenho%20uma%20d%C3%BAvida.%20Por%20favor,%20me%20ajude!" class="text-gray-400 hover:text-white transition">Trocas e Devoluções</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Redes Sociais</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/nike" target="_blank" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="https://twitter.com/Nike" target="_blank" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="https://www.instagram.com/nike/" target="_blank" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="https://www.youtube.com/user/nike" target="_blank" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Nike Brasil. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
+        <div class="bg-white w-full max-w-md h-full overflow-y-auto">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-xl font-bold">Seu Carrinho</h3>
+                <button id="close-cart" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="p-4 space-y-4">
+                <!-- Cart items will be added here dynamically -->
+                <div class="text-center py-8">
+                    <i class="fas fa-shopping-bag text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">Seu carrinho está vazio</p>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold">Subtotal:</span>
+                    <span id="cart-subtotal" class="font-bold">R$ 0,00</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold">Frete:</span>
+                    <span id="cart-shipping" class="font-bold">R$ 0,00</span>
+                </div>
+                <div class="flex justify-between mb-6 border-t border-gray-200 pt-2">
+                    <span class="font-bold text-lg">Total:</span>
+                    <span id="cart-total" class="font-bold text-lg">R$ 0,00</span>
+                </div>
+                <button class="w-full bg-black text-white hover:bg-gray-800 font-medium py-3 px-4 rounded-full transition duration-300 mb-2">
+                    Finalizar Compra
+                </button>
+                <button id="continue-shopping" class="w-full bg-white text-black hover:bg-gray-100 font-medium py-3 px-4 rounded-full transition duration-300 border border-gray-300">
+                    Continuar Comprando
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        });
+        
+        // Search Toggle
+        const searchBtn = document.getElementById('search-btn');
+        const searchBar = document.getElementById('search-bar');
+        
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+        });
+        
+        // Shopping Cart
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCart = document.getElementById('close-cart');
+        const cartModal = document.getElementById('cart-modal');
+        const cartCount = document.getElementById('cart-count');
+        const cartItems = document.getElementById('cart-items');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartShipping = document.getElementById('cart-shipping');
+        const cartTotal = document.getElementById('cart-total');
+        const continueShopping = document.getElementById('continue-shopping');
+        
+        let cart = [];
+        let subtotal = 0;
+        const shippingCost = 19.99;
+        
+        cartBtn.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        continueShopping.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Add to Cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.target.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                const productPrice = parseFloat(productCard.querySelector('span').textContent.replace('R$ ', '').replace(',', '.'));
+                const productImage = productCard.querySelector('img').src;
+                
+                // Add to cart
+                cart.push({
+                    name: productName,
+                    price: productPrice,
+                    image: productImage
+                });
+                
+                // Update subtotal
+                subtotal += productPrice;
+                
+                // Update cart count
+                cartCount.textContent = cart.length;
+                cartCount.style.display = 'flex';
+                
+                // Update cart modal
+                updateCartModal();
+                
+                // Show success message
+                showNotification(`${productName} foi adicionado ao carrinho!`);
+            });
+        });
+        
+        function updateCartModal() {
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-shopping-bag text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">Seu carrinho está vazio</p>
+                    </div>
+                `;
+                cartSubtotal.textContent = 'R$ 0,00';
+                cartShipping.textContent = 'R$ 0,00';
+                cartTotal.textContent = 'R$ 0,00';
+                return;
+            }
+            
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center border-b border-gray-200 pb-4';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded mr-4">
+                    <div class="flex-grow">
+                        <h4 class="font-medium">${item.name}</h4>
+                        <p class="text-gray-600">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                        <button class="text-sm text-red-500 hover:text-red-700 remove-item mt-1" data-index="${index}">
+                            <i class="fas fa-trash-alt mr-1"></i> Remover
+                        </button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Calculate shipping
+            const shipping = subtotal > 500 ? 0 : shippingCost;
+            const total = subtotal + shipping;
+            
+            cartSubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            cartShipping.textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2).replace('.', ',')}`;
+            cartTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.closest('.remove-item').dataset.index);
+                    subtotal -= cart[index].price;
+                    cart.splice(index, 1);
+                    
+                    // Update cart count
+                    cartCount.textContent = cart.length;
+                    if (cart.length === 0) {
+                        cartCount.style.display = 'none';
+                    }
+                    
+                    updateCartModal();
+                    showNotification('Item removido do carrinho');
+                });
+            });
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-black text-white px-6 py-3 rounded-lg shadow-lg flex items-center';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('translate-x-full')) {
+                        mobileMenu.classList.add('translate-x-full');
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                        }, 300);
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+        
+        // Product image hover effect
+        document.querySelectorAll('.product-card img').forEach(img => {
+            img.addEventListener('mouseenter', () => {
+                img.style.transform = 'scale(1.05)';
+                img.style.transition = 'transform 0.3s ease';
+            });
+            
+            img.addEventListener('mouseleave', () => {
+                img.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
